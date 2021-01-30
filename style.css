@@ -1,0 +1,184 @@
+body {
+  background: rgb(1, 3, 3);
+}
+.container {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-start;
+}
+#wrapper {
+  width: 1200px;
+  margin: 0 auto;
+}
+#button {
+  width: 300px;
+  height: 100px;
+  background: green;
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  font-size: 47px;
+  font-weight: 900;
+  top: 300px;
+  border-radius: 10px;
+  left: 735px;
+}
+.mark{
+  font-size: 12px;
+  opacity: 0.7;
+  margin-top: -10px;
+}
+.present_item{
+font-size: 12px;
+opacity: 0.5;
+}
+#restart {
+  width: 300px;
+  height: 100px;
+  background: red;
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  font-size: 47px;
+  font-weight: 900;
+  top: 300px;
+  border-radius: 10px;
+  display: none;
+  left: 735px;
+}
+.result {
+  position: absolute;
+  color: violet;
+  font-size: 28px;
+  font: bold Arial;
+  left: 357px;
+  top: -28px;
+}
+.gameOver {
+  position: absolute;
+  font-size: 50px;
+  font-family: Arial, Helvetica, sans-serif;
+  left: 735px;
+  color: white;
+  font-weight: 900;
+  top: 150px;
+  margin-bottom: 0px;
+}
+/* убираем курсор */
+canvas {
+  cursor: none;
+}
+@keyframes glowing {
+  0% {
+    background-color: #2ba805;
+    box-shadow: 0 0 5px #2ba805;
+  }
+  50% {
+    background-color: #49e819;
+    box-shadow: 0 0 20px #49e819;
+  }
+  100% {
+    background-color: #2ba805;
+    box-shadow: 0 0 5px #2ba805;
+  }
+}
+#restart {
+  animation: glowing 1300ms infinite;
+}
+
+@media (min-width: 2550px) {
+  #restart,
+  #button,
+
+  .gameOver {
+    left: 1125px;
+  }
+  .result {
+    left: 700px;
+  }
+}
+@media (max-width: 1910px) {
+  #restart,
+  #button,
+  .gameOver {
+    left: 775px;
+  }
+}
+@media (max-width: 1440px) {
+  #restart,
+  #button,
+  .gameOver {
+    left: 570px;
+  }
+  .result {
+    left: 125px;
+  }
+}
+@media (max-width: 1024px) {
+  #restart,
+  #button {
+    left: 355px;
+    font-size: 30px;
+  }
+  .result {
+    left: 5px;
+  }
+  .gameOver {
+    left: 410px;
+    font-size: 30px;
+  }
+}
+@media (max-width: 768px) {
+  #restart,
+  #button,
+  .gameOver {
+    left: 295px;
+    height: 70px;
+    width: 200px;
+  }
+}
+@media (max-width: 768px) {
+  #restart,
+  #button,
+  .gameOver {
+    left: 290px;
+  }
+  .result {
+    font-size: 24px;
+    top: -13px;
+  }
+}
+@media (max-width: 425px) {
+  #restart,
+  #button {
+    left: 115px;
+  }
+  .result {
+    font-size: 18px;
+    top: -13px;
+  }
+  .gameOver {
+    left: 120px;
+  }
+}
+@media (max-width: 375px) {
+  #restart,
+  #button{
+    left: 85px;
+  }
+  .gameOver {
+    left: 95px;
+  }
+}
+@media (max-width: 325px) {
+  #restart,
+  #button {
+    left: 70px;
+    font-size: 19px;
+    width: 180px;
+    height: 60px;
+  }
+  .gameOver{
+          left: 68px;
+  }
+}
