@@ -1,60 +1,61 @@
-var canvas = document.getElementById('game')
-var context = canvas.getContext('2d')
-var button = document.getElementById('button')
+
+const canvas = document.getElementById('game')
+const context = canvas.getContext('2d')
+const button = document.getElementById('button')
 const restart = document.getElementById('restart')
 button.addEventListener("click", game)
 restart.addEventListener('click', reStart)
 
-let container = document.querySelector('.container')
-let p = document.createElement('p');
+const container = document.querySelector('.container')
+const p = document.createElement('p');
 p.className = 'result'
-let gameOver = document.createElement('p')
+const gameOver = document.createElement('p')
 gameOver.className = 'gameOver'
 
 //загрузка астеройда
-var asterimg = new Image()
+let asterimg = new Image()
 asterimg.src = './img/aster1.png'
 //загрузка звука выстрела
-var audio1 = new Audio();
+let audio1 = new Audio();
 audio1.preload = 'auto';
 audio1.src = './sound/laser1.mp3';
 
 //загрузка звука полета каробля
-var audioship = new Audio();
+let audioship = new Audio();
 audioship.preload = 'auto';
 audioship.src = './sound/gol.mp3';
 
 //загрузка звука взрыва
-var audiobang = new Audio();
+let audiobang = new Audio();
 audiobang.preload = 'auto';
 audiobang.src = './sound/bangAsteroid.mp3';
 
 
 //загрузка звука взрыва коробля
-var audiobangShip = new Audio();
+let audiobangShip = new Audio();
 audiobangShip.preload = 'auto';
 audiobangShip.src = './sound/bangShip.mp3';
 
 // выйстрел
-var fireImg = new Image()
+let fireImg = new Image()
 fireImg.src = './img/fire.png'
 // загрузка самолета
-var shipimg = new Image()
+let shipimg = new Image()
 shipimg.src = './img/ship.png'
 
 // загрузка фона
-var fonimg = new Image()
+let fonimg = new Image()
 fonimg.src = './img/kosmos.png'
 
 // загрузка взрыва
-var explimg = new Image()
+let explimg = new Image()
 explimg.src = './img/bang.png'
 
 // загрузка взрыва коробля
-var explAirimg = new Image()
+let explAirimg = new Image()
 explAirimg.src = './img/airBang.png'
 // координаты корабля
-var ship = { x: 300, y: 300, del: 0 }
+let ship = { x: 300, y: 300, del: 0 }
 
 
 // движение курсора 
@@ -67,23 +68,23 @@ canvas.addEventListener('mousemove', function (e) {
 //var aster = {x:0, y:300, dx:1, dy:2} // кординаты астеройда, dx-скорость передвижения, dy - скорость изменения координат 
 
 // делаем много астеройдов
-var timer = 0
+let timer = 0
 
-var aster = [] // делаем много астеройдов
+const aster = [] // делаем много астеройдов
 
-var fire = []// массив для выйстрелов
+const fire = []// массив для выйстрелов
 
-var expl = [] // массив для взрывов 
+const expl = [] // массив для взрывов 
 
-var callexpl = 0 //количество очков
+let callexpl = 0 //количество очков
 
-var explAir = {} // взрыв самолета
+let explAir = {} // взрыв самолета
 
-var speedFire = 80 // скорость огня
+let speedFire = 80 // скорость огня
 
-var speedaster = 20
+let speedaster = 20
 
-var level = 1
+let level = 1
 // explimg.onload = function () {
 //     // game()
 // }
