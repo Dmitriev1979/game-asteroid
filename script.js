@@ -1,19 +1,334 @@
-var $jscomp = $jscomp || {}; $jscomp.scope = {}; $jscomp.createTemplateTagFirstArg = function (a) { return a.raw = a }; $jscomp.createTemplateTagFirstArgWithRaw = function (a, b) { a.raw = b; return a }; var canvas = document.getElementById("game"), context = canvas.getContext("2d"), button = document.getElementById("button"), restart = document.getElementById("restart"); button.addEventListener("click", game); restart.addEventListener("click", reStart); var container = document.querySelector(".container"), p = document.createElement("p");
-p.className = "result"; var gameOver = document.createElement("p"); gameOver.className = "gameOver"; var asterimg = new Image; asterimg.src = "./img/aster1.png"; var audio1 = new Audio; audio1.preload = "auto"; audio1.src = "./sound/laser1.mp3"; var audioship = new Audio; audioship.preload = "auto"; audioship.src = "./sound/gol.mp3"; var audiobang = new Audio; audiobang.preload = "auto"; audiobang.src = "./sound/bangAsteroid.mp3"; var audiobangShip = new Audio; audiobangShip.preload = "auto"; audiobangShip.src = "./sound/bangShip.mp3";
-var fireImg = new Image; fireImg.src = "./img/fire.png"; var shipimg = new Image; shipimg.src = "./img/ship.png"; var fonimg = new Image; fonimg.src = "./img/kosmos.png"; var explimg = new Image; explimg.src = "./img/bang.png"; var explAirimg = new Image; explAirimg.src = "./img/airBang.png"; var ship = { x: 300, y: 300, del: 0 }; canvas.addEventListener("mousemove", function (a) { ship.x = a.offsetX - 45; ship.y = a.offsetY - 40 }); var timer = 0, aster = [], fire = [], expl = [], callexpl = 0, explAir = {}, speedFire = 80, speedaster = 20, level = 1; explimg.onload = function () { };
-1 < timer && (restart.style.display = "none"); function reStart() { button.style.display = "none"; restart.style.display = "none"; 2 < timer ? window.location.reload() : game() } function game() { update(); render(); 1 !== ship.del ? requestAnimFrame(game) : null }
-function update() {
-    timer++; 0 == timer % speedaster && aster.push({ x: 1E3 * Math.random(), y: -50, dx: 2 * Math.random() - 1, dy: 2 * Math.random() + 2, del: 0 }); audioship.play(); 0 == timer % speedFire && (50 > callexpl && (fire.push({ x: ship.x + 25, y: ship.y - 15, dx: 0, dy: -5 }), audio1.play()), 50 <= callexpl && 200 > callexpl && (speedFire = 50, speedaster = 15, level = 2, fire.push({ x: ship.x + 25, y: ship.y - 15, dx: 0, dy: -5 }), shipimg.src = "./img/ship1.png", fireImg.src = "./img/fire1.png", audio1.src = "./sound/laser5_2.mp3", audio1.play()), 200 <= callexpl && 300 > callexpl && (speedaster =
-        12, level = 3, shipimg.src = "./img/ship2.png", fonimg.src = "./img/spase.png", audio1.src = "./sound/lazer6_2.mp3", audio1.play(), audiobang.src = "./sound/bangAsteroid.mp3", audiobang.play(), fire.push({ x: ship.x + 25, y: ship.y - 15, dx: 0, dy: -5.2 }), fire.push({ x: ship.x + 25, y: ship.y - 15, dx: .5, dy: -5 }), fire.push({ x: ship.x + 25, y: ship.y - 15, dx: -.5, dy: -5 })), 300 <= callexpl && 550 > callexpl && (speedFire = 40, speedaster = 9, level = 4, shipimg.src = "./img/ship3.png", audio1.src = "./sound/laser5_3.mp3", audio1.play(), audiobang.src = "./sound/bangAsteroid2.mp3",
-            audiobang.play(), fire.push({ x: ship.x + 25, y: ship.y - 15, dx: 0, dy: -5.2 }), fire.push({ x: ship.x + 25, y: ship.y - 15, dx: .5, dy: -5 }), fire.push({ x: ship.x + 25, y: ship.y - 15, dx: -.5, dy: -5 })), 550 <= callexpl && 800 > callexpl && (speedaster = 5, speedFire = 30, level = 5, shipimg.src = "./img/ship4.png", fonimg.src = "./img/spase2.png", audio1.src = "./sound/lazer7.mp3", audio1.play(), fire.push({ x: ship.x + 25, y: ship.y - 15, dx: 0, dy: -5.2 }), fire.push({ x: ship.x + 25, y: ship.y - 15, dx: .8, dy: -5 }), fire.push({ x: ship.x + 25, y: ship.y - 15, dx: -.8, dy: -5 })), 800 <= callexpl &&
-            1200 > callexpl && (speedaster = 5, level = 6, speedFire = 20, shipimg.src = "./img/ship5.png", fireImg.src = "./img/fire2.png", audio1.src = "./sound/lazer8.mp3", audio1.play(), fire.push({ x: ship.x + 25, y: ship.y - 15, dx: 0, dy: -5.2 }), fire.push({ x: ship.x + 25, y: ship.y - 15, dx: .5, dy: -5 }), fire.push({ x: ship.x + 25, y: ship.y - 15, dx: -.5, dy: -5 }), fire.push({ x: ship.x + 25, y: ship.y - 15, dx: -1, dy: -5 })), 1200 <= callexpl && (speedaster = 5, level = 7, speedFire = 20, fonimg.src = "./img/space4.png", shipimg.src = "./img/ship6.png", audio1.src = "./sound/lazer9.mp3", audio1.play(),
-                fire.push({ x: ship.x + 25, y: ship.y - 15, dx: 1, dy: -5.2 }), fire.push({ x: ship.x + 25, y: ship.y - 15, dx: 0, dy: -5.2 }), fire.push({ x: ship.x + 25, y: ship.y - 15, dx: .5, dy: -5 }), fire.push({ x: ship.x + 25, y: ship.y - 15, dx: -.5, dy: -5 }), fire.push({ x: ship.x + 25, y: ship.y - 15, dx: -1, dy: -5 }))); for (i in fire) fire[i].x += fire[i].dx, fire[i].y += fire[i].dy, -30 > fire[i].y && fire.splice(i, 1); for (i in expl) expl[i].animx += 1, 7 < expl[i].animx && (expl[i].animy++, expl[i].animx = 0), 7 < expl[i].animy && expl.splice(i, 1); for (i in aster) {
-                    aster[i].x += aster[i].dx; aster[i].y +=
-                        aster[i].dy; if (1420 <= aster[i].x || 0 > aster[i].x) aster[i].dx = -aster[i].dx; 900 <= aster[i].y && aster.splice(i, 1); for (j in fire) if (50 > Math.abs(aster[i].x + 25 - fire[j].x - 15) && 25 > Math.abs(aster[i].y - fire[j].y)) { callexpl++; expl.push({ x: aster[i].x - 25, y: aster[i].y - 25, animx: 0, animy: 0 }); aster[i].del = 1; fire.splice(j, 1); break } 1 == aster[i].del && aster.splice(i, 1); for (k in aster) 50 > Math.abs(ship.x + 45 - aster[k].x - 15) && 25 > Math.abs(ship.y - aster[k].y) && (ship.del = 1)
-                }
+var canvas = document.getElementById('game')
+var context = canvas.getContext('2d')
+var button = document.getElementById('button')
+const restart = document.getElementById('restart')
+button.addEventListener("click", game)
+restart.addEventListener('click', reStart)
+
+let container = document.querySelector('.container')
+let p = document.createElement('p');
+p.className = 'result'
+let gameOver = document.createElement('p')
+gameOver.className = 'gameOver'
+
+//загрузка астеройда
+var asterimg = new Image()
+asterimg.src = './img/aster1.png'
+//загрузка звука выстрела
+var audio1 = new Audio();
+audio1.preload = 'auto';
+audio1.src = './sound/laser1.mp3';
+
+//загрузка звука полета каробля
+var audioship = new Audio();
+audioship.preload = 'auto';
+audioship.src = './sound/gol.mp3';
+
+//загрузка звука взрыва
+var audiobang = new Audio();
+audiobang.preload = 'auto';
+audiobang.src = './sound/bangAsteroid.mp3';
+
+
+//загрузка звука взрыва коробля
+var audiobangShip = new Audio();
+audiobangShip.preload = 'auto';
+audiobangShip.src = './sound/bangShip.mp3';
+
+// выйстрел
+var fireImg = new Image()
+fireImg.src = './img/fire.png'
+// загрузка самолета
+var shipimg = new Image()
+shipimg.src = './img/ship.png'
+
+// загрузка фона
+var fonimg = new Image()
+fonimg.src = './img/kosmos.png'
+
+// загрузка взрыва
+var explimg = new Image()
+explimg.src = './img/bang.png'
+
+// загрузка взрыва коробля
+var explAirimg = new Image()
+explAirimg.src = './img/airBang.png'
+// координаты корабля
+var ship = { x: 300, y: 300, del: 0 }
+
+
+// движение курсора 
+canvas.addEventListener('mousemove', function (e) {
+    ship.x = e.offsetX - 45
+    ship.y = e.offsetY - 40
+})
+
+// Делаем один астеройд
+//var aster = {x:0, y:300, dx:1, dy:2} // кординаты астеройда, dx-скорость передвижения, dy - скорость изменения координат 
+
+// делаем много астеройдов
+var timer = 0
+
+var aster = [] // делаем много астеройдов
+
+var fire = []// массив для выйстрелов
+
+var expl = [] // массив для взрывов 
+
+var callexpl = 0 //количество очков
+
+var explAir = {} // взрыв самолета
+
+var speedFire = 80 // скорость огня
+
+var speedaster = 20
+
+var level = 1
+// explimg.onload = function () {
+//     // game()
+// }
+if (timer > 1) {
+    restart.style.display = 'none'
+
 }
+function reStart() {
+    button.style.display = 'none'
+    restart.style.display = 'none'
+    if (timer > 2) {
+        window.location.reload()
+
+    } else {
+        game()
+
+    }
+
+}
+
+// игровой цикл
+function game() {
+    update()
+    render()
+
+    ship.del !== 1 ? requestAnimFrame(game) : null//браузер будет вызывать эту функцию с астотой 60герц, если корабль подобьют, игра закончиться
+
+}
+
+function update() {
+    timer++
+    if (timer % speedaster === 0) {
+        //   aster.push({ x: 0, y: 300, dx: 1, dy: 2 })// увеличиваем количество астеройдов каждые 10 фреймов
+        aster.push({
+            x: Math.random() * 1000, // рандомное появление астеройдов 
+            y: -50, // астеройды появляются за экраном
+            dx: Math.random() * 2 - 1, // рандомная скорость от -1 до 2 для каждого астеройда  
+            dy: Math.random() * 2 + 2, // что бы астеройды летели вниз а не вверх 
+            del: 0    // для пометки при попадании снаряда, если станет 1 то удаляем астеройд
+        })
+
+    }
+
+    // звук полета каробля
+    audioship.play()
+
+    // выстрелы
+    if (timer % speedFire === 0) {
+        if (callexpl < 50) {
+            fire.push({ x: ship.x + 25, y: ship.y - 15, dx: 0, dy: -5 })
+
+            audio1.play();
+
+        }
+        if (callexpl >= 50 && callexpl < 200) {
+            speedFire = 50
+            speedaster = 15
+            level = 2
+            fire.push({ x: ship.x + 25, y: ship.y - 15, dx: 0, dy: -5 })
+            shipimg.src = './img/ship1.png'
+            fireImg.src = './img/fire1.png'
+
+            audio1.src = './sound/laser5_2.mp3'
+
+            audio1.play();
+
+
+        }
+        if (callexpl >= 200 && callexpl < 300) {
+            speedaster = 12
+            level = 3
+            shipimg.src = './img/ship2.png'
+            fonimg.src = './img/spase.png'
+            audio1.src = './sound/lazer6_2.mp3'
+            audio1.play();
+            audiobang.src = './sound/bangAsteroid.mp3';
+            audiobang.play()
+
+            fire.push({ x: ship.x + 25, y: ship.y - 15, dx: 0, dy: -5.2 })
+            fire.push({ x: ship.x + 25, y: ship.y - 15, dx: 0.5, dy: -5 })
+            fire.push({ x: ship.x + 25, y: ship.y - 15, dx: -0.5, dy: -5 })
+        }
+        if (callexpl >= 300 && callexpl < 550) {
+            speedFire = 40
+            speedaster = 9
+            level = 4
+            shipimg.src = './img/ship3.png'
+            audio1.src = './sound/laser5_3.mp3'
+            audio1.play()
+            audiobang.src = './sound/bangAsteroid2.mp3';
+            audiobang.play()
+
+            fire.push({ x: ship.x + 25, y: ship.y - 15, dx: 0, dy: -5.2 })
+            fire.push({ x: ship.x + 25, y: ship.y - 15, dx: 0.5, dy: -5 })
+            fire.push({ x: ship.x + 25, y: ship.y - 15, dx: -0.5, dy: -5 })
+        }
+        if (callexpl >= 550 && callexpl < 800) {
+            speedaster = 5
+            speedFire = 30
+            level = 5
+            shipimg.src = './img/ship4.png'
+            fonimg.src = './img/spase2.png'
+            audio1.src = './sound/lazer7.mp3'
+            audio1.play()
+            fire.push({ x: ship.x + 25, y: ship.y - 15, dx: 0, dy: -5.2 })
+            fire.push({ x: ship.x + 25, y: ship.y - 15, dx: 0.8, dy: -5 })
+            fire.push({ x: ship.x + 25, y: ship.y - 15, dx: -0.8, dy: -5 })
+
+        }
+        if (callexpl >= 800 && callexpl < 1200) {
+            speedaster = 5
+            level = 6
+            speedFire = 20
+            shipimg.src = './img/ship5.png'
+            fireImg.src = './img/fire2.png'
+            audio1.src = './sound/lazer8.mp3'
+            audio1.play()
+
+            fire.push({ x: ship.x + 25, y: ship.y - 15, dx: 0, dy: -5.2 })
+            fire.push({ x: ship.x + 25, y: ship.y - 15, dx: 0.5, dy: -5 })
+            fire.push({ x: ship.x + 25, y: ship.y - 15, dx: -0.5, dy: -5 })
+            fire.push({ x: ship.x + 25, y: ship.y - 15, dx: - 1, dy: -5 })
+
+        }
+        if (callexpl >= 1200) {
+            speedaster = 5
+            level = 7
+            speedFire = 20
+            fonimg.src = './img/space4.png'
+
+            shipimg.src = './img/ship6.png'
+            audio1.src = './sound/lazer9.mp3'
+            audio1.play()
+
+            fire.push({ x: ship.x + 25, y: ship.y - 15, dx: 1, dy: -5.2 })
+            fire.push({ x: ship.x + 25, y: ship.y - 15, dx: 0, dy: -5.2 })
+            fire.push({ x: ship.x + 25, y: ship.y - 15, dx: 0.5, dy: -5 })
+            fire.push({ x: ship.x + 25, y: ship.y - 15, dx: -0.5, dy: -5 })
+            fire.push({ x: ship.x + 25, y: ship.y - 15, dx: - 1, dy: -5 })
+        }
+
+
+
+    }
+    // двигаем пули
+    for (i in fire) {
+        fire[i].x = fire[i].x + fire[i].dx
+        fire[i].y = fire[i].y + fire[i].dy
+
+        if (fire[i].y < - 30) fire.splice(i, 1)
+    }
+
+
+    //Анимация взрыва
+    for (i in expl) {
+        expl[i].animx = expl[i].animx + 1
+        if (expl[i].animx > 7) { expl[i].animy++; expl[i].animx = 0 }
+        if (expl[i].animy > 7)
+            expl.splice(i, 1)
+    }
+    for (i in aster) {
+        aster[i].x = aster[i].x + aster[i].dx // при апдейте координата ч у астеройда увеличивается на единицу
+        aster[i].y = aster[i].y + aster[i].dy // при апдейте координата ч у астеройда увеличивается на единицу
+
+
+        // границы
+        if (aster[i].x >= 1420 || aster[i].x < 0) aster[i].dx = -aster[i].dx // граница движения астеройда,
+        if (aster[i].y >= 900) aster.splice(i, 1)// граница движения астеройда,
+
+        //проверим каждый астеройд на столкновение с каждой пулей
+        for (j in fire) {
+            if (Math.abs(aster[i].x + 25 - fire[j].x - 15) < 50 && Math.abs(aster[i].y - fire[j].y) < 25) {
+                callexpl++
+                // произошло столкновение
+                //   exp1.push({x:aster[i].x-25, y:aster[i].y-25, animx:0, animy:0})
+
+                // спам взрыва
+                expl.push({ x: aster[i].x - 25, y: aster[i].y - 25, animx: 0, animy: 0 })
+
+                // помечаем астеройд на удаление
+                aster[i].del = 1
+                fire.splice(j, 1); break;
+            }
+        }
+        if (aster[i].del === 1) aster.splice(i, 1)
+
+        for (k in aster) {
+            if (Math.abs(ship.x + 45 - aster[k].x - 15) < 50 && Math.abs(ship.y - aster[k].y) < 25) {
+                ship.del = 1
+            }
+
+
+        }
+
+    }
+}
+
 function render() {
-    context.drawImage(fonimg, 0, 0, 1200, 900); context.drawImage(shipimg, ship.x, ship.y, 100, 100); for (i in fire) context.drawImage(fireImg, fire[i].x, fire[i].y, 50, 50); for (i in aster) context.drawImage(asterimg, aster[i].x, aster[i].y, 80, 80); context.font = "12px Arial"; context.fillStyle = "white"; context.opasity = .5; context.fillText("\u00ae \u0421\u0442\u0443\u0434\u0438\u044f \u0418\u043b\u044c\u0438 \u0414\u043c\u0438\u0442\u0440\u0438\u0435\u0432\u0430", 450, 10); for (i in expl) audiobang.play(), context.drawImage(explimg,
-        100 * Math.floor(expl[i].animx), 100 * Math.floor(expl[i].animy), 100, 100, expl[i].x, expl[i].y, 100, 100); 1 === ship.del && (audioship.pause(), audiobangShip.play(), context.drawImage(explAirimg, ship.x - 60, ship.y - 50, 200, 200), audio1.pause(), setTimeout(function () { audiobangShip.pause() }, 3E3), setTimeout(function () { restart.style.display = "block" }, 3050)); p.innerHTML = "\u041f\u043e\u043f\u0430\u0434\u0430\u043d\u0438\u0439: " + callexpl + " \u0423\u0440\u043e\u0432\u0435\u043d\u044c: " + level; container.appendChild(p); 1 == ship.del &&
-            (gameOver.innerHTML = "Game ower", container.appendChild(gameOver))
-} var requestAnimFrame = function () { return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (a) { window.setTimeout(a, 50) } }();
+    context.drawImage(fonimg, 0, 0, 1200, 900);
+    context.drawImage(shipimg, ship.x, ship.y, 100, 100);
+    for (i in fire) context.drawImage(fireImg, fire[i].x, fire[i].y, 50, 50);
+    for (i in aster) context.drawImage(asterimg, aster[i].x, aster[i].y, 80, 80);
+    context.font = "12px Arial";
+    context.fillStyle = "white";
+    context.opasity = 0.5
+    context.fillText('® Студия Ильи Дмитриева', 450, 10)
+    // отрисовка зврыва
+    for (i in expl) {
+        audiobang.play()
+
+        context.drawImage(explimg, 100 * Math.floor(expl[i].animx), 100 * Math.floor(expl[i].animy), 100, 100, expl[i].x, expl[i].y, 100, 100);
+    }
+    if (ship.del === 1) {
+        audioship.pause()
+        audiobangShip.play()
+        context.drawImage(explAirimg, ship.x - 60, ship.y - 50, 200, 200);
+        audio1.pause()
+        setTimeout(() => { audiobangShip.pause() }, 3000)
+
+        setTimeout(() => { restart.style.display = 'block' }, 3050)
+
+    }
+    p.innerHTML = `Попаданий: ${callexpl} Уровень: ${level}`
+    container.appendChild(p)
+
+
+
+    // показ окончания игры
+    if (ship.del === 1) {
+        gameOver.innerHTML = "Game ower"
+        container.appendChild(gameOver)
+
+    }
+
+
+}
+// для того чтобы игра работала в любом браузере
+var requestAnimFrame = (function () {
+    return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function (callback) {
+            window.setTimeout(callback, 1000 / 20)
+        }
+})()
+
