@@ -5,12 +5,16 @@ const button = document.getElementById('button')
 const restart = document.getElementById('restart')
 button.addEventListener("click", game)
 restart.addEventListener('click', reStart)
+const img = document.getElementsByTagName('img')
+
+
 
 const container = document.querySelector('.container')
 const p = document.createElement('p');
 p.className = 'result'
 const gameOver = document.createElement('p')
 gameOver.className = 'gameOver'
+
 
 //загрузка астеройда
 let asterimg = new Image()
@@ -91,15 +95,20 @@ let level = 1
 if (timer > 1) {
     restart.style.display = 'none'
 
+
 }
 function reStart() {
     button.style.display = 'none'
     restart.style.display = 'none'
+  
     if (timer > 2) {
         window.location.reload()
+        img[0].style.display = 'none'
 
     } else {
         game()
+img[0].style.display = 'none'
+
 
     }
 
@@ -305,6 +314,9 @@ function render() {
         setTimeout(() => { audiobangShip.pause() }, 3000)
 
         setTimeout(() => { restart.style.display = 'block' }, 3050)
+        setTimeout(() => { img[0].style.display = 'block' }, 3050)
+
+        
 
     }
     p.innerHTML = `Попаданий: ${callexpl} Уровень: ${level}`

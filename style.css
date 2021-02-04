@@ -5,6 +5,7 @@ body {
   display: flex;
   flex-direction: row-reverse;
   justify-content: flex-start;
+  
 }
 #wrapper {
   width: 1200px;
@@ -67,6 +68,13 @@ opacity: 0.5;
 /* убираем курсор */
 canvas {
   cursor: none;
+}
+img{
+background-size: cover;
+    width: 100%;
+    position: absolute;
+ /* display: none; */
+
 }
 @keyframes glowing {
   0% {
